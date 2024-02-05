@@ -1,37 +1,37 @@
 // #1 
 
-#include <iostream>
-using namespace std;
-
-
-double power(double n, int p) {
-    double result = 1;
-    for (int i = 0; i < p; ++i) {
-        result *= n;
-    }
-    return result;
-}
-
-
-int main() {
-
-    double number;
-    int exp;
-
-    cout << "Put number = ";
-    cin >> number;
-    cout << "Put number, number must be > 2 = ";
-    cin >> exp;
-    
-    if (exp < 2) {
-        cout << "Exp is < 2" << endl;
-        exp = 2;
-    }
-
-    double result = power(number, exp);
-    cout << "Result = " << result;
-    return 0; 
-}
+//#include <iostream>
+//using namespace std;
+//
+//
+//double power(double n, int p) {
+//    double result = 1;
+//    for (int i = 0; i < p; ++i) {
+//        result *= n;
+//    }
+//    return result;
+//}
+//
+//
+//int main() {
+//
+//    double number;
+//    int exp;
+//
+//    cout << "Put number = ";
+//    cin >> number;
+//    cout << "Put number, number must be > 2 = ";
+//    cin >> exp;
+//    
+//    if (exp < 2) {
+//        cout << "Exp is < 2" << endl;
+//        exp = 2;
+//    }
+//
+//    double result = power(number, exp);
+//    cout << "Result = " << result;
+//    return 0; 
+//}
 
 
 
