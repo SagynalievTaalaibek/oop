@@ -189,7 +189,7 @@
 //    Student(string last, string first, string birth, string phone)
 //        : lastName(last), firstName(first), birthDate(birth), phoneNumber(phone) {}
 //
-//    // Перегрузка оператора < для сортировки
+//  
 //    bool operator<(const Student& other) const {
 //        return lastName < other.lastName;
 //    }
@@ -202,6 +202,7 @@
 //};
 //
 //// Класс "Студенческая группа"
+////
 //class StudentGroup {
 //private:
 //    vector<Student> students;
@@ -326,193 +327,193 @@
 
 
 //3. Опишите класс, реализующий стек (Stack). 
-
-#include <iostream>
-#include <fstream>
-#include <stack>
-#include <string>
-
-using namespace std;
-
-// Класс реализующий стек
-template <typename T>
-class Stack {
-private:
-    stack<T> data;
-
-public:
-    // Метод для добавления элемента в вершину стека
-    void push(const T& element) {
-        data.push(element);
-    }
-
-    // Метод для удаления элемента из вершины стека
-    void pop() {
-        if (!isEmpty()) {
-            data.pop();
-        }
-    }
-
-
-    // Метод для получения элемента из вершины стека
-    T top() const {
-        if (!isEmpty()) {
-            return data.top();
-        }
-        else {
-            cerr << "Стек пуст." << endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    // Метод для проверки, пуст ли стек
-    bool isEmpty() const {
-        return data.empty();
-    }
-
-    // Метод для получения размера стека
-    size_t size() const {
-        return data.size();
-    }
-};
-
-// Тип вагона
-enum WagonType {
-    PASSENGER,
-    CARGO
-};
-
-// Класс для представления вагона
-class Wagon {
-public:
-    WagonType type;
-    string number;
-
-    Wagon() : type(PASSENGER), number("") {}
-
-    Wagon(WagonType t, const string& n) : type(t), number(n) {}
-
-    // Метод для отображения информации о вагоне
-    void displayInfo() const {
-        cout << "Тип: " << (type == PASSENGER ? "Пассажирский" : "Грузовой")
-            << "\tНомер: " << number << endl;
-    }
-
-    template <typename T>
-    void displayStackInfo(const Stack<T>& stack) {
-        Stack<T> tempStack = stack;  // Создаем копию стека
-        while (!tempStack.isEmpty()) {
-            tempStack.top().displayInfo();  // Используем метод displayInfo
-            tempStack.pop();
-        }
-    }
-};
-
-// Функция для формирования состава из файла
-void formTrainFromFile(Stack<Wagon>& platform) {
-    ifstream file("input.txt");
-    if (file.is_open()) {
-        string line;
-        while (getline(file, line)) {
-            WagonType type = (line[0] == 'P') ? PASSENGER : CARGO;
-            string number = line.substr(1);
-            platform.push(Wagon(type, number));
-        }
-        file.close();
-    }
-    else {
-        cerr << "Не удалось открыть файл." << endl;
-        exit(EXIT_FAILURE);
-    }
-}
-
-// Функция для формирования состава с клавиатуры
-void formTrainFromInput(Stack<Wagon>& platform) {
-    cout << "Введите информацию о вагонах (P - пассажирский, C - грузовой, например P123):" << endl;
-    cout << "Для завершения ввода введите пустую строку." << endl;
-
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Очищаем буфер перед началом ввода
-
-    string line;
-    while (true) {
-        cout << "Введите информацию о вагоне (P - пассажирский, C - грузовой, например P123): ";
-        getline(cin, line);
-
-        if (line.empty()) {
-            break;
-        }
-
-        WagonType type = (line[0] == 'P' || line[0] == 'p') ? PASSENGER : CARGO;
-        string number = line.substr(1);
-        platform.push(Wagon(type, number));
-    }
-}
-
-
-// Функция для разделения состава на два направления
-void separateTrain(Stack<Wagon>& inputPlatform, Stack<Wagon>& leftDirection, Stack<Wagon>& rightDirection) {
-    while (!inputPlatform.isEmpty()) {
-        Wagon currentWagon = inputPlatform.top();
-        inputPlatform.pop();
-
-        if (currentWagon.type == PASSENGER) {
-            leftDirection.push(currentWagon);
-        }
-        else {
-            rightDirection.push(currentWagon);
-        }
-    }
-}
-
-int main() {
-    setlocale(LC_ALL, "ru");
-
-    Stack<Wagon> platform;
-    Stack<Wagon> leftDirection;
-    Stack<Wagon> rightDirection;
-
-    int choice;
-    do {
-        cout << "\n1. Формирование состава из файла\n"
-            << "2. Формирование состава с клавиатуры\n"
-            << "3. Разделение состава на два направления\n"
-            << "4. Отобразить информацию о вагонах на платформе\n"
-            << "5. Отобразить информацию о вагонах на левом направлении\n"
-            << "6. Отобразить информацию о вагонах на правом направлении\n"
-            << "0. Выйти\n"
-            << "Выберите действие: ";
-        cin >> choice;
-
-        switch (choice) {
-        case 1:
-            formTrainFromFile(platform);
-            break;
-        case 2:
-            formTrainFromInput(platform);
-            break;
-        case 3:
-            separateTrain(platform, leftDirection, rightDirection);
-            cout << "Состав разделен на два направления." << endl;
-            break;
-        case 4:
-            cout << "\nИнформация о вагонах на платформе:" << endl;
-            Wagon().displayStackInfo(platform);
-            break;
-        case 5:
-            cout << "\nИнформация о вагонах на левом направлении:" << endl;
-            Wagon().displayStackInfo(leftDirection);
-            break;
-        case 6:
-            cout << "\nИнформация о вагонах на правом направлении:" << endl;
-            Wagon().displayStackInfo(rightDirection);
-        case 0:
-            cout << "Программа завершена.\n";
-            break;
-        default:
-            cout << "Некорректный ввод. Попробуйте снова.\n";
-        }
-
-    } while (choice != 0);
-
-    return 0;
-}
+//
+//#include <iostream>
+//#include <fstream>
+//#include <stack>
+//#include <string>
+//
+//using namespace std;
+//
+//// Класс реализующий стек
+//template <typename T>
+//class Stack {
+//private:
+//    stack<T> data;
+//
+//public:
+//    // Метод для добавления элемента в вершину стека
+//    void push(const T& element) {
+//        data.push(element);
+//    }
+//
+//    // Метод для удаления элемента из вершины стека
+//    void pop() {
+//        if (!isEmpty()) {
+//            data.pop();
+//        }
+//    }
+//
+//
+//    // Метод для получения элемента из вершины стека
+//    T top() const {
+//        if (!isEmpty()) {
+//            return data.top();
+//        }
+//        else {
+//            cerr << "Стек пуст." << endl;
+//            exit(EXIT_FAILURE);
+//        }
+//    }
+//
+//    // Метод для проверки, пуст ли стек
+//    bool isEmpty() const {
+//        return data.empty();
+//    }
+//
+//    // Метод для получения размера стека
+//    size_t size() const {
+//        return data.size();
+//    }
+//};
+//
+//// Тип вагона
+//enum WagonType {
+//    PASSENGER,
+//    CARGO
+//};
+//
+//// Класс для представления вагона
+//class Wagon {
+//public:
+//    WagonType type;
+//    string number;
+//
+//    Wagon() : type(PASSENGER), number("") {}
+//
+//    Wagon(WagonType t, const string& n) : type(t), number(n) {}
+//
+//    // Метод для отображения информации о вагоне
+//    void displayInfo() const {
+//        cout << "Тип: " << (type == PASSENGER ? "Пассажирский" : "Грузовой")
+//            << "\tНомер: " << number << endl;
+//    }
+//
+//    template <typename T>
+//    void displayStackInfo(const Stack<T>& stack) {
+//        Stack<T> tempStack = stack;  // Создаем копию стека
+//        while (!tempStack.isEmpty()) {
+//            tempStack.top().displayInfo();  // Используем метод displayInfo
+//            tempStack.pop();
+//        }
+//    }
+//};
+//
+//// Функция для формирования состава из файла
+//void formTrainFromFile(Stack<Wagon>& platform) {
+//    ifstream file("input.txt");
+//    if (file.is_open()) {
+//        string line;
+//        while (getline(file, line)) {
+//            WagonType type = (line[0] == 'P') ? PASSENGER : CARGO;
+//            string number = line.substr(1);
+//            platform.push(Wagon(type, number));
+//        }
+//        file.close();
+//    }
+//    else {
+//        cerr << "Не удалось открыть файл." << endl;
+//        exit(EXIT_FAILURE);
+//    }
+//}
+//
+//// Функция для формирования состава с клавиатуры
+//void formTrainFromInput(Stack<Wagon>& platform) {
+//    cout << "Введите информацию о вагонах (P - пассажирский, C - грузовой, например P123):" << endl;
+//    cout << "Для завершения ввода введите пустую строку." << endl;
+//
+//    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Очищаем буфер перед началом ввода
+//
+//    string line;
+//    while (true) {
+//        cout << "Введите информацию о вагоне (P - пассажирский, C - грузовой, например P123): ";
+//        getline(cin, line);
+//
+//        if (line.empty()) {
+//            break;
+//        }
+//
+//        WagonType type = (line[0] == 'P' || line[0] == 'p') ? PASSENGER : CARGO;
+//        string number = line.substr(1);
+//        platform.push(Wagon(type, number));
+//    }
+//}
+//
+//
+//// Функция для разделения состава на два направления
+//void separateTrain(Stack<Wagon>& inputPlatform, Stack<Wagon>& leftDirection, Stack<Wagon>& rightDirection) {
+//    while (!inputPlatform.isEmpty()) {
+//        Wagon currentWagon = inputPlatform.top();
+//        inputPlatform.pop();
+//
+//        if (currentWagon.type == PASSENGER) {
+//            leftDirection.push(currentWagon);
+//        }
+//        else {
+//            rightDirection.push(currentWagon);
+//        }
+//    }
+//}
+//
+//int main() {
+//    setlocale(LC_ALL, "ru");
+//
+//    Stack<Wagon> platform;
+//    Stack<Wagon> leftDirection;
+//    Stack<Wagon> rightDirection;
+//
+//    int choice;
+//    do {
+//        cout << "\n1. Формирование состава из файла\n"
+//            << "2. Формирование состава с клавиатуры\n"
+//            << "3. Разделение состава на два направления\n"
+//            << "4. Отобразить информацию о вагонах на платформе\n"
+//            << "5. Отобразить информацию о вагонах на левом направлении\n"
+//            << "6. Отобразить информацию о вагонах на правом направлении\n"
+//            << "0. Выйти\n"
+//            << "Выберите действие: ";
+//        cin >> choice;
+//
+//        switch (choice) {
+//        case 1:
+//            formTrainFromFile(platform);
+//            break;
+//        case 2:
+//            formTrainFromInput(platform);
+//            break;
+//        case 3:
+//            separateTrain(platform, leftDirection, rightDirection);
+//            cout << "Состав разделен на два направления." << endl;
+//            break;
+//        case 4:
+//            cout << "\nИнформация о вагонах на платформе:" << endl;
+//            Wagon().displayStackInfo(platform);
+//            break;
+//        case 5:
+//            cout << "\nИнформация о вагонах на левом направлении:" << endl;
+//            Wagon().displayStackInfo(leftDirection);
+//            break;
+//        case 6:
+//            cout << "\nИнформация о вагонах на правом направлении:" << endl;
+//            Wagon().displayStackInfo(rightDirection);
+//        case 0:
+//            cout << "Программа завершена.\n";
+//            break;
+//        default:
+//            cout << "Некорректный ввод. Попробуйте снова.\n";
+//        }
+//
+//    } while (choice != 0);
+//
+//    return 0;
+//}

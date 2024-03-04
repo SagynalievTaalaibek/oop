@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClCompile Include="1laba.cpp" />
     <ClCompile Include="2laba.cpp" />
+    <ClCompile Include="3laba.cpp" />
+    <ClCompile Include="4laba.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
