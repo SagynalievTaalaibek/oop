@@ -127,16 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="10.cpp" />
     <ClCompile Include="1laba.cpp" />
     <ClCompile Include="2laba.cpp" />
     <ClCompile Include="3laba.cpp" />
     <ClCompile Include="4laba.cpp" />
+    <ClCompile Include="8laba.cpp" />
+    <ClCompile Include="9.cpp" />
+    <ClCompile Include="lab7.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt" />
+    <Text Include="trains.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,6 +27,18 @@
     <ClCompile Include="4laba.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="lab7.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="8laba.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="9.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="10.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">
@@ -35,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="input.txt">
+      <Filter>Исходные файлы</Filter>
+    </Text>
+    <Text Include="trains.txt">
       <Filter>Исходные файлы</Filter>
     </Text>
   </ItemGroup>
