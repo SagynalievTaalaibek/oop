@@ -1,53 +1,67 @@
-
-#include<iostream>
-#include<ctime>
-using namespace std;
-
-class AntiaircraftGun {
-private:
-	static double p;   //статическое поле /вероятность попадания выстрела
-public:
-	static void result(int& n, int& p, int& q) {  //статический метод /результат стрельбы
-		int a;
-		for (int i = 1; i <= n; i++) {
-			a = 0 + rand() % 2;
-			if (a == 0)
-				q++;
-			else {
-				p++;
-				n = p + q;
-				break;
-			}
-		}
-	}
-	static void probability(int q) {  //статический метод (вероятность попадания выстрела)
-		double prob;
-		if (q == 0)
-			prob = p;
-		else
-			prob = 1 - pow((1 - p), q);
-		cout << "Вероятность попадания: " << prob << endl << endl;
-	}
-
-};
-
-double AntiaircraftGun::p = 0.5;
-
-int main() {
-	setlocale(LC_ALL, "ru");
-	srand(time(NULL));
-	int p = 0, q = 0, n;
-	cout << "Введите количество выстрелов: ";
-	while (true) {
-		cin >> n;
-		if (n < 1 || !cin || n > 10)
-			cout << "\nИзмените ввод!\n";
-		else break;
-	}
-	AntiaircraftGun shoot;
-	shoot.result(n, p, q);
-	cout << "\nВсего выстрелов: " << n << "\nКоличество промахов: " << q << "\nКоличество попаданий : " << p << endl << endl;
-	shoot.probability(q);
-	system("pause");
-	return 0;
-}
+//
+//#include <iostream>
+//#include <cstdlib>
+//#include <ctime>
+//#include <cmath>
+//
+//using namespace std;
+//#define ANSI_COLOR_GREEN "\033[32m"
+//#define ANSI_COLOR_RESET "\033[0m"
+//#define ANSI_COLOR_RED "\033[31m"
+//
+//class PVO {
+//private:
+//    static double p;
+//
+//public:
+//    static void setProbability(double probability) {
+//        p = probability;
+//    }
+//
+//    static int shootDownPlane(int n) {
+//        srand(time(nullptr));
+//
+//        for (int i = 0; i < n; i++) {
+//            double random = static_cast<double>(rand()) / RAND_MAX;
+//            if (random < p) {
+//                return 1;
+//            }
+//        }
+//        return 0;
+//    }
+//
+//    static double estimatedProbability(int n) {
+//        return 1 - pow(1 - p, n);
+//    }
+//};
+//
+//double PVO::p = 0.0; // инициализация статического поля
+//
+//
+//int main() {
+//    setlocale(LC_ALL, "ru");
+//
+//    int n;
+//    cout << "Введите количество выстрелов (n): ";
+//    cin >> n;
+//
+//    double p;
+//    cout << "Введите вероятность попадания по самолету (p): ";
+//    cin >> p;
+//
+//    PVO::setProbability(p);
+//
+//    for (int i = 0; i < n; i++) {
+//        int result = PVO::shootDownPlane(i);
+//        double estimated = PVO::estimatedProbability(i);
+//        cout << "Оценочная вероятность поражения цели при " << i + 1 << " выстрелах с вероятностью попадания " << p << ": " << estimated << endl;
+//        if (result) {
+//            cout << "Результат стрельбы: " << ANSI_COLOR_GREEN << "Цель уничтожена" << ANSI_COLOR_RESET << endl;
+//            break;
+//        }
+//        else if (i == n - 1)
+//            cout << "Результат стрельбы: " << ANSI_COLOR_RED << " Цель не сбита" << ANSI_COLOR_RESET << endl;
+//    }
+//
+//    return 0;
+//}

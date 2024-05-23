@@ -1,4 +1,5 @@
-﻿  8laba.cpp
-  9.cpp
+﻿  srs1.cpp
+  srs2.cpp
+C:\Programming\oop\oop\oop\srs2.cpp(99,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   Создание кода...
   oop.vcxproj -> C:\Programming\oop\oop\x64\Debug\oop.exe

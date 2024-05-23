@@ -135,6 +135,8 @@
     <ClCompile Include="8laba.cpp" />
     <ClCompile Include="9.cpp" />
     <ClCompile Include="lab7.cpp" />
+    <ClCompile Include="srs1.cpp" />
+    <ClCompile Include="srs2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />
